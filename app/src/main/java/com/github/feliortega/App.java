@@ -10,13 +10,15 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public class App {
+  private static final @ApiCall String emptyString = "";
+
   public static void main(String[] cmdArgs) {
     System.out.println("ItemsClient");
     itemsClient().forEach(System.out::println);
-    System.out.println();
+    System.out.println(emptyString);
 
     System.out.println("RestClient");
-    restClient().forEach(System.out::println);;
+    restClient().forEach(System.out::println);
   }
 
   public static Stream<String> itemsClient() {
