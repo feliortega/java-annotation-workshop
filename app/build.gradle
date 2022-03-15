@@ -1,0 +1,22 @@
+plugins {
+    id 'application'
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClassName 'com.github.feliortega.App'
+}
+
+dependencies {
+    implementation project(':lib')
+}
+
+test {
+    useJUnitPlatform()
+}
