@@ -1,4 +1,6 @@
-package com.github.feliortega.annotation;
+package com.github.feliortega.client;
+
+import com.github.feliortega.annotation.ApiCall;
 
 public class RestUtils {
   @ApiCall("{host}/user/{id}")

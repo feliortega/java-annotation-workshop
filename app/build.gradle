@@ -5,10 +5,6 @@ plugins {
 sourceCompatibility = 11
 targetCompatibility = 11
 
-repositories {
-    mavenLocal()
-}
-
 application {
     getMainClass().set('com.github.feliortega.App')
 }
@@ -16,8 +12,4 @@ application {
 dependencies {
     implementation project(':lib')
     annotationProcessor project(':lib')
-}
-
-test {
-    useJUnitPlatform()
 }
