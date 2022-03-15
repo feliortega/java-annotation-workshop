@@ -14,13 +14,16 @@ public class AnnotationProcessor extends AbstractProcessor {
   @Override
   public boolean process(Set<? extends TypeElement> types, RoundEnvironment roundEnvironment) {
     types.stream()
-        .flatMap(type -> roundEnvironment.getElementsAnnotatedWith(type).stream()
-            .map(element -> new Tuple<Element, ApiCall>(element, element.getAnnotation(ApiCall.class))))
+        .flatMap(type ->
+            roundEnvironment.getElementsAnnotatedWith(type).stream()
+                .map(element ->
+                    new Tuple<Element, ApiCall>(element, element.getAnnotation(ApiCall.class))))
         .map(t -> String.format("%s -> %s", t.a, t.b))
         .forEach(this::printInfo);
 
     return false;
   }
+
   public void printInfo(String message) {
     processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE, message);
   }
