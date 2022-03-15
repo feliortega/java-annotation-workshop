@@ -10,11 +10,12 @@ repositories {
 }
 
 application {
-    mainClassName 'com.github.feliortega.App'
+    getMainClass().set('com.github.feliortega.App')
 }
 
 dependencies {
     implementation project(':lib')
+    annotationProcessor project(':lib')
 }
 
 test {
