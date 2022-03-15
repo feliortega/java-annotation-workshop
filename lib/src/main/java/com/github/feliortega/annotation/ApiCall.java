@@ -1,4 +1,4 @@
-package com.github.feliortega;
+package com.github.feliortega.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
