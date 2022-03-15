@@ -10,9 +10,7 @@ import javax.tools.Diagnostic;
 public class AnnotationProcessor extends AbstractProcessor {
   @Override
   public boolean process(Set<? extends TypeElement> set, RoundEnvironment roundEnvironment) {
-    set.forEach(System.out::println);
-
-    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, "run");
+    processingEnv.getMessager().printMessage(Diagnostic.Kind.WARNING, "run");
     return false;
   }
 

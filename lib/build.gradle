@@ -1,11 +1,13 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
 }
 
 sourceCompatibility = 11
 targetCompatibility = 11
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -15,4 +17,15 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            groupId 'com.github.feliortega'
+            artifactId 'java-annotation-workshop'
+            version "0.0.0"
+        }
+    }
 }
