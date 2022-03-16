@@ -30,7 +30,9 @@ public class App {
   private static Stream<String> getMethodAnnotation(Class<?> c) {
     return Stream.of(c.getMethods())
         .flatMap(method -> Stream.of(method.getAnnotations()).map(annotation ->
-            new Tuple<String, Optional<? extends Annotation>>(method.toString(), Optional.ofNullable(method.getAnnotation(annotation.annotationType())))))
+            new Tuple<String, Optional<? extends Annotation>>(
+                method.toString(),
+                Optional.ofNullable(method.getAnnotation(annotation.annotationType())))))
         .map(value -> value.b.isPresent()
             ? String.format("%s \t %s", value.b.get(), value.a)
             : String.format("(no api call) \t %s", value.a)
