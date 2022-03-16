@@ -5,7 +5,6 @@ import com.github.feliortega.client.ItemsClient;
 import com.github.feliortega.client.RestUtils;
 import com.github.feliortega.type.Tuple;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -14,31 +13,27 @@ public class App {
 
   public static void main(String[] cmdArgs) {
     System.out.println("ItemsClient");
-    itemsClient().forEach(System.out::println);
+    getClassAnnotations(ItemsClient.class).forEach(System.out::println);
+
     System.out.println(emptyString);
 
     System.out.println("RestClient");
-    restClient().forEach(System.out::println);
+    getMethodAnnotation(RestUtils.class).forEach(System.out::println);
   }
 
-  public static Stream<String> itemsClient() {
-    final Annotation[] annotations = ItemsClient.class.getAnnotations();
-
-    return Stream.of(annotations)
-        .map(annotation -> ItemsClient.class
-            .getAnnotation(annotation.annotationType())
-            .toString());
+  private static Stream<? extends Annotation> getClassAnnotations(Class<?> c) {
+    return Stream.of(c.getAnnotations())
+        .map(annotation -> c
+            .getAnnotation(annotation.annotationType()));
   }
 
-  public static Stream<String> restClient() {
-    final Method[] methods = RestUtils.class.getMethods();
-
-    return Stream.of(methods)
-        .map(method -> new Tuple<String, Optional<ApiCall>>(method.toString(), Optional.ofNullable(method.getAnnotation(ApiCall.class))))
-        .map(value ->
-            value.b.isPresent()
-                ? String.format("%s \t %s", value.b.get().value(), value.a)
-                : String.format("(no api call) \t %s", value.a)
+  private static Stream<String> getMethodAnnotation(Class<?> c) {
+    return Stream.of(c.getMethods())
+        .flatMap(method -> Stream.of(method.getAnnotations()).map(annotation ->
+            new Tuple<String, Optional<? extends Annotation>>(method.toString(), Optional.ofNullable(method.getAnnotation(annotation.getClass())))))
+        .map(value -> value.b.isPresent()
+            ? String.format("%s \t %s", value.b.get(), value.a)
+            : String.format("(no api call) \t %s", value.a)
         );
   }
 }
